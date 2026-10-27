@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Список нотаток</h2>
+    <a href="{{ url_for('create') }}" class="btn btn-primary">+ Додати нотатку</a>
+</div>
+
+<div class="row">
+    {% for note in notes %}
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ note['title'] }}</h5>
+                <p class="card-text">{{ note['content'] }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="{{ url_for('edit', id=note['id']) }}" class="btn btn-sm btn-outline-secondary">Редагувати</a>
+                    <form action="{{ url_for('delete', id=note['id']) }}" method="POST" class="d-inline">
+                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Видалити цей запис?')">Видалити</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12">
+        <p class="text-muted">Поки що немає жодної нотатки. Створи першу!</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
